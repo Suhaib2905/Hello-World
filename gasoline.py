@@ -9,11 +9,11 @@ class Gasoline(models.Model):
 
     # @api.one
     # @api.depends('gasoline_lines_ids.cash', 'gasoline_lines_ids.credit')
-    # def _compute_total(self):
+    def _compute_total(self):
     #     self.total_cash = sum(line.cash for line in self.gasoline_lines_ids)
     #     self.total_credit = sum(line.credit for line in self.gasoline_lines_ids)
     #     self.sub_total = self.total_cash + self.total_credit
-
+     self.difference = self.close_meter_reading - self.open_meter_reading
     name = fields.Char(string="Name")
     station = fields.Many2one('gasoline.station', string="Station")
     date = fields.Datetime("Date", default=lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'))
@@ -41,7 +41,7 @@ class Gasoline(models.Model):
     @api.onchange('fuel_product_id')
     def _fuel_product(self):
         self.unit_price = self.fuel_product_id.list_price
-        self.difference = self.close_meter_reading - self.open_meter_reading
+        
 class GasolineLines(models.Model):
     _name = 'gasoline.lines'
 
