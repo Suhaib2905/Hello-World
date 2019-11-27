@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="gasoline_actions" model="ir.actions.act_window">
+        <field name="name">Gasoline Station</field>
+        <field name="res_model">gasoline</field>
+        <field name="res_mode">tree,form</field>
+    </record>
+
+    <record id="gasoline_station_actions" model="ir.actions.act_window">
+        <field name="name">Station</field>
+        <field name="res_model">gasoline.station</field>
+        <field name="res_mode">tree,form</field>
+    </record>
+
+    <menuitem id="gasoline_menu" name="Gasoline Station" action="gasoline_actions"/>
+    <menuitem id="gasoline_menu_dashboard" name="Dashboard" action="gasoline_actions" parent="gasoline_menu" sequence="2"/>
+    <menuitem id="station_menu" name="Station" parent="gasoline_menu" action="gasoline_station_actions" sequence="3"/>
+
+    <record id="gasoline_form_view" model="ir.ui.view">
+        <field name="name">Sales Order</field>
+        <field name="model">gasoline</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Employee Info">
+                            <field name="employee"/>
+                            <field name="duty_shift"/>
+                            <field name="pump"/>
+                            <field name="date"/>
+                        </group>
+                        <group string="Fuel and Reading">
+                            <field name="fuel_product_id"/>
+                            <field name="open_meter_reading"/>
+                            <field name="close_meter_reading"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Computation Reading">
+                            <field name="difference" readonly="1"/>
+                            <field name="ltr" readonly="1"/>
+                            <field name="unit_price" readonly="1"/>
+                            <field name="total_price" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Detais">
+                            <field name="gasoline_lines_ids" widget="one2many_list">
+                                <tree editable="bottom">
+                                    <field name="ltr_cash_credit"/>
+                                    <field name="ltr"/>
+                                    <field name="ltr_unit_price"/>
+                                    <field name="ltr_total_amount"/>
+                                </tree>
+                            </field>
+                            <!-- <group>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="total_cash"/>
+                                    <field name="total_credit"/>
+                                    <field name="sub_total" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group> -->
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- STATION FORM & TREE VIEW -->
+    <!-- <record id="station_form_view" model="ir.ui.view">
+        <field name="name">station.form.view</field>
+        <field name="model">gasoline.station</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <notebook>
+                        <page string="Station Pumps">
+                            <field name="pumps_ids" widget="one2many_list">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Accounts">
+                            <group>
+                                <group>
+                                    <field name="cash_account_id"/>
+                                    <field name="credit_account_id"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record> -->
+</odoo>
