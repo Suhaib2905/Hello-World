@@ -41,7 +41,7 @@ class Gasoline(models.Model):
     @api.onchange('fuel_product_id')
     def _fuel_product(self):
         self.unit_price = self.fuel_product_id.list_price
-
+        self.difference = self.close_meter_reading - self.open_meter_reading
 class GasolineLines(models.Model):
     _name = 'gasoline.lines'
 
